@@ -10,8 +10,10 @@ import matplotlib.pyplot as plt
 
 sys.path.append('..')
 
-train = pd.read_csv("D:/myproj/ML/MXNet/data/kaggle_house_pred_train.csv")
-test = pd.read_csv("D:/myproj/ML/MXNet/data/kaggle_house_pred_test.csv")
+# train = pd.read_csv("D:/myproj/ML/MXNet/data/kaggle_house_pred_train.csv")
+# test = pd.read_csv("D:/myproj/ML/MXNet/data/kaggle_house_pred_test.csv")
+train = pd.read_csv("D:/mypython/ML_MXNet/data/kaggle_house_pred_train.csv")
+test = pd.read_csv("D:/mypython/ML_MXNet/data/kaggle_house_pred_test.csv")
 all_X = pd.concat((train.loc[:, 'MSSubClass':'SaleCondition'],
                       test.loc[:, 'MSSubClass':'SaleCondition']))
 
@@ -53,7 +55,7 @@ def get_net():
     net = gluon.nn.Sequential()
     with net.name_scope():
         net.add(gluon.nn.Flatten())
-        net.add(gluon.nn.Dense(260, activation="relu"))
+        net.add(gluon.nn.Dense(200, activation="relu"))
         # net.add(gluon.nn.Dense(300, activation="relu"))
         #net.add(gluon.nn.Dropout(0.2))
         #net.add(gluon.nn.Dense(331, activation="relu"))
@@ -83,7 +85,6 @@ def train(net, X_train, y_train, X_test, y_test, epochs,
                 loss = square_loss(output, label)
             loss.backward()
             trainer.step(batch_size)
-
             cur_train_loss = get_rmse_log(net, X_train, y_train)
         if epoch > verbose_epoch:
             print("Epoch %d, train loss: %f" % (epoch, cur_train_loss))
@@ -101,7 +102,7 @@ def train(net, X_train, y_train, X_test, y_test, epochs,
         return cur_train_loss, cur_test_loss
     else:
         return cur_train_loss
-#k折交叉验证
+# k-fold cross valid function
 def k_fold_cross_valid(k, epochs, verbose_epoch, X_train, y_train,
                        learning_rate, weight_decay):
     assert k > 1
