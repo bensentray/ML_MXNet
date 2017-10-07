@@ -1,4 +1,5 @@
 # -*- coding:utf-8  -*-
+#  comment
 #  CNN_0 for scratch on CNN
 import sys
 import mxnet as mx
