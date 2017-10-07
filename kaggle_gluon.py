@@ -34,7 +34,7 @@ all_X = all_X.fillna(all_X.mean())  #缺失数据用本特征的平均值估计
 # print(all_X.iloc[0:10,0:6])
 #转换数据格式
 num_train = train.shape[0]
-print(num_train)
+# print(num_train)
 X_train = all_X[:num_train].as_matrix()
 X_test = all_X[num_train:].as_matrix()
 y_train = train.SalePrice.as_matrix()
@@ -56,9 +56,9 @@ def get_net():
     with net.name_scope():
         net.add(gluon.nn.Flatten())
         net.add(gluon.nn.Dense(200, activation="relu"))
-        # net.add(gluon.nn.Dense(300, activation="relu"))
-        #net.add(gluon.nn.Dropout(0.2))
-        #net.add(gluon.nn.Dense(331, activation="relu"))
+        net.add(gluon.nn.Dropout(0.2))
+        # net.add(gluon.nn.Dense(20, activation="relu"))
+        # net.add(gluon.nn.Dropout(0.45))
         net.add(gluon.nn.Dense(1))
     net.initialize()
     return net
@@ -134,11 +134,11 @@ def k_fold_cross_valid(k, epochs, verbose_epoch, X_train, y_train,
         test_loss_sum += test_loss
     return train_loss_sum / k, test_loss_sum / k
 
-k = 5
-epochs = 100
-verbose_epoch = 95
-learning_rate = 5
-weight_decay = 0
+k             = 5
+epochs        = 30
+verbose_epoch = 25
+learning_rate = 0.05
+weight_decay  = 6
 
 train_loss, test_loss = k_fold_cross_valid(k, epochs, verbose_epoch, X_train,
                                            y_train, learning_rate, weight_decay)
