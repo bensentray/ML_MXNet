@@ -1,5 +1,6 @@
 from mxnet import nd
 from mxnet.gluon import nn
+# 1 创建神经网络
 #嵌套使用nn.Block和nn.Sequential
 class rec_MLP(nn.Block):
     def __init__(self,**kwargs):
